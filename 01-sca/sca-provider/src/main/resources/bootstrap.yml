@@ -1,0 +1,35 @@
+#服务器端口
+server:
+  port: 8081
+#服务名
+spring:
+  application:
+    name: sca-provider
+#服务器注册地址 (服务启动时向配置的地址发送心跳包)
+#一般是5秒发送一次
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848 #将来nacos会在一台独立的机器上进行部署
+        #nacos服务的配置
+      config:
+        server-addr: localhost:8848
+        file-extension: yml
+        namespace: 7185cb7e-e215-4d85-842e-25ac05516dfa
+        group: DEFAULT_GROUP_51
+        shared-configs[0]:
+          data-id: app-public.yml
+          refresh: true
+
+    sentinel:
+      transport: #sentinel 控制台服务的地址
+        dashboard: localhost:8180
+      web-context-unify: false
+
+
+#已经移植到nacos配置中心
+#logging:
+#  level:
+#    com.jt: debug
+
+

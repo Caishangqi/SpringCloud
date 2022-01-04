@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>01-sca</artifactId>
+        <groupId>com.jt</groupId>
+        <version>1.0-SNAPSHOT</version>
+        <relativePath>../pox.xml</relativePath>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>sca-provider</artifactId>
+
+    <dependencies>
+        <!--Web服务-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <!--基于alibaba的nacos实现服务注册管理,当添加了此依赖后，系统
+        启动时会向nacos服务发送一些心跳包，进行服务注册,当我们项目中
+        添加了这样的一个依赖，就表示此项目是nacos服务的一个客户端对象-->
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
+        </dependency>
+
+        <!--添加nacos配置中心依赖，此依赖添加以后，项目中会有一些api从nacos获取配置信息-->
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
+        </dependency>
+
+        <!--添加sentinel依赖,当我们添加这个依赖以后，此依赖会在我们的服务中添加一个spring mvc
+        拦截器对象，这个对象会对你的请求进行拦截，分析请求是否在sentinel控制台规则的允许范围之内，
+        假如在范围之内则放行，不在则拒绝访问。-->
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-sentinel</artifactId>
+        </dependency>
+
+    </dependencies>
+
+    <properties>
+        <maven.compiler.source>8</maven.compiler.source>
+        <maven.compiler.target>8</maven.compiler.target>
+    </properties>
+
+</project>

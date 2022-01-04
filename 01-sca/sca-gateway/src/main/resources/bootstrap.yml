@@ -1,0 +1,33 @@
+server:
+  port: 9000
+spring:
+  application:
+    name: sca-gateway
+  cloud:
+    nacos:
+      discovery: #服务注册和发现
+        server-addr: localhost:8848
+      config:
+        server-addr: localhost:8848
+        file-extension: yml
+    sentinel:
+      transport:
+        dashboard: localhost:8180
+      eager: true #true表示服务启动时，即可在sentinel控制台看到服务信息
+#    gateway:
+#      globalcors:
+#        cors-configurations:
+#          '[/**]':
+#            allowedOrigins: "*"
+#            allowedMethods: "*"
+    #    gateway: #网关配置
+#      routes: # 路由配置(routes下可以有多个路由，用id做唯一标识)
+#        - id: route01
+#          #lb表示负载均衡，sca-provider为服务注册中心的一个服务名
+#          uri: lb://sca-provider
+#          #uri: http://localhost:8081/
+#          predicates: #谓词判断逻辑(定义请求转发条件，谓词所有条件都满足才会执行请求转发)
+#            - Path=/nacos/provider/echo/**
+#          filters: #局部过滤器，针对于当前路由进行设计，谓词逻辑返回值都为true则执行这里filter
+#            - StripPrefix=1 #去除前缀过滤器，这里1表示去掉Path中第一层目录
+#          #流程分析： RoutePredicateHandlerMapping-->PathRoutePredicateFactory-->Xxx WebHandler-->Filters()

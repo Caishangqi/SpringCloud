@@ -1,0 +1,23 @@
+#服务器端口
+server:
+  port: 8090
+#服务名
+spring:
+  application:
+    name: sca-consumer
+#服务器注册地址 (服务启动时向配置的地址发送心跳包)
+#一般是5秒发送一次
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848 #将来nacos会在一台独立的机器上进行部署
+
+#sca-provider服务的负载均衡配置
+sca-provider:
+  ribbon: #ribbon是一个负载均衡组件，是Ribbon组件中提供了IRule接口及相关实现
+    NFLoadBalancerRuleClassName: com.netflix.loadbalancer.RandomRule
+
+
+feign:
+  hystrix:
+    enabled: true #打开熔断机制

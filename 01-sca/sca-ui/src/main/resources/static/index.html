@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>前端系统</title>
+</head>
+<script src="/js/axios.min.js"></script>
+<body>
+<h2>The index Page</h2>
+<button onclick="doBuy()">购买</button>
+<span id="result"></span>
+<script>
+    function doBuy() {
+        //1.定义请求url(注意对应的是网关的地址)
+        let url = "http://localhost:9000/nacos/provider/echo/1";
+        //2.基于axios框架发送ajax异步请求
+        let span = document.getElementById("result");
+        axios.get(url)
+            .then(function (result) {
+
+                console.log(result);
+
+                if (!result.data.status) {
+                    span.innerHTML = result.data;
+                } else {
+                    span.getElementById("result").innerHTML = result.message;
+                }
+
+            })
+            .catch(function (error) {//服务端没有处理异常，走这里
+                if (error.response.status == 429) {
+                    span.innerHTML = error.response.statusText;
+                }
+            });
+
+    }
+
+</script>
+</body>
+</html>
