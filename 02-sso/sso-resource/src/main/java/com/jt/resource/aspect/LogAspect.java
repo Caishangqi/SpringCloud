@@ -2,6 +2,7 @@ package com.jt.resource.aspect;
 
 import com.jt.resource.annotation.RequiredLog;
 import com.jt.resource.pojo.Log;
+import com.jt.resource.service.RemoteLogService;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.Signature;
@@ -10,6 +11,7 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.codehaus.jackson.map.ObjectMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -42,7 +44,7 @@ public class LogAspect {
      * 通知方法，在方法内可以手动调用目标方法执行链，在执行
      * 链执行过程中获取用户行为日志，并进行封装和记录。
      *
-     * @param joinPoint ProceedingJoinPoint为连接点对象，这个类型对象
+     * @param jp ProceedingJoinPoint为连接点对象，这个类型对象
      *                  只能应用在@Around注解描述的方法上，并且可以通过
      *                  这个连接点对象获取目标方法信息，调用目标方法执行链。
      * @return 目标方法(切入点方法)执行结果
@@ -89,7 +91,6 @@ public class LogAspect {
         //1.3获取当前用户的操作
         //1.3.1获取目标对象类型(切入点方法所在类的类型)
         Class<?> targetClass = jp.getTarget().getClass();
-
         //1.3.2获取目标方法(切入点方法)
         //通过连接点对象获取方法签名对象(此对象中包含了目标方法信息)
         MethodSignature signature = (MethodSignature) jp.getSignature();
@@ -125,8 +126,15 @@ public class LogAspect {
 
         //3.记录用户行为日志(控制台，文件，数据库)
         log.debug("log {}", userLog);
+        remoteLogService.insertLog(userLog);
 
     }
+
+    /**
+     * Feign接口，通过此接口将用户日志对象传递给system工程。
+     */
+    @Autowired
+    private RemoteLogService remoteLogService;
 
 
 }
