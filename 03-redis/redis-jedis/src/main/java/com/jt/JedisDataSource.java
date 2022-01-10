@@ -11,6 +11,7 @@ import redis.clients.jedis.JedisPoolConfig;
  * 请问你该如何设计这个DataSource对象。
  */
 public class JedisDataSource {
+
     // 方案1：类加载时则创建池对象
     //    private static JedisPool jedisPool;
     //    static{
@@ -43,7 +44,7 @@ public class JedisDataSource {
                     config.setMaxIdle(16);
                     //1.2创建连接池(将来这个池在内存中有一份就够了)
                     jedisPool = new JedisPool(config, "192.168.126.129", 6379);
-                    //45行创建对象过程分析(理论上是如下这个步骤，但是JVM内部会有指令重排序 不一定按照 1,2,3,4 执行)
+                    //47行创建对象过程分析(理论上是如下这个步骤，但是JVM内部会有指令重排序 不一定按照 1,2,3,4 执行)
                     //1.分配内存
                     //2.属性初始化
                     //3.调用构造方法
