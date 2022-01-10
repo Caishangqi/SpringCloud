@@ -10,4 +10,9 @@ public interface RemoteLogService {
 
     @PostMapping("/log")
     public void insertLog(@RequestBody Log log);
+
+
+
+
+
 }
