@@ -129,6 +129,7 @@ public class RedisTemplateTests {
 
         //把这个map存到redis中
         hashOperations.putAll("blog-abba", map);
+        hashOperations.put("blog-abba", "id", "200"); //根据redis中的key直接修改
         //从redis中取出这个map
         Map entries = hashOperations.entries("blog-abba");
         System.out.println(entries);
