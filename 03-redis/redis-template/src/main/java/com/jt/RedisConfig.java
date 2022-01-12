@@ -39,7 +39,7 @@ public class RedisConfig {
         //将对象类型写入到序列化的字符串中
         objectMapper.activateDefaultTyping(objectMapper.getPolymorphicTypeValidator(), //多态校验
                 ObjectMapper.DefaultTyping.NON_FINAL, //非final对象允许序列化
-                JsonTypeInfo.As.EXISTING_PROPERTY); //类型以属性形式进行存储
+                JsonTypeInfo.As.PROPERTY); //类型以属性形式进行存储
 
         /*如果不储存类型则就找不到对象，默认储存到linked hashmap*/
 
